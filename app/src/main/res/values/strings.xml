@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">TruKast</string>
+    <string name="get_started">Get Started</string>
+    <string name="onboarding_welcome_msg">From the latest to the greatest hits, play your favorite Channels on Trucast now!</string>
+    <string name="login_to_your_ac">Login to your account</string>
+    <string name="email">Email</string>
+    <string name="username">Username</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="password">Password</string>
+    <string name="remember_password">Remember Password</string>
+    <string name="login">Log in</string>
+    <string name="forget_the_password">Forgot the password?</string>
+    <string name="dont_have_an_ac">Don\'t have an account?</string>
+    <string name="sign_up_q"> Sign Up</string>
+    <string name="welcome_please_enter_your_details">WELCOME! Please enter your details  </string>
+    <string name="i_agree_with_privacy_and_policy">I agree with Privacy and Policy</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="send_code">Send code</string>
+    <string name="forget_password">Forgot password</string>
+    <string name="enter_email_address_to_receive_notification_code">Enter email address to receive\nverification code</string>
+    <string name="listen_to_your_favourite_channel">Listen to your\nFavorite channels</string>
+    <string name="settings">Settings</string>
+    <string name="notifications">Notifications</string>
+    <string name="privacy_and_policy">Privacy &amp; Policy</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="terms_and_conditions">Terms &amp; Conditions</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="about_us">About Us</string>
+    <string name="logout">Log out</string>
+    <string name="logout_q">Logout?</string>
+    <string name="cancel">Cancel</string>
+    <string name="are_you_sure_to_logout">Are you sure you want to log out?</string>
+    <string name="media_notification_channel">Media Player</string>
+    <string name="media_notification_channel_description">Channel Description</string>
+
+</resources>
