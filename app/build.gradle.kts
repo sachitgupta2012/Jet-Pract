@@ -80,6 +80,10 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    testImplementation("io.mockk:mockk:1.13.3")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0")
+    testImplementation("app.cash.turbine:turbine:1.0.0")
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 
     // Kotlin Coroutines
@@ -105,5 +109,6 @@ dependencies {
     implementation ("androidx.media3:media3-common:1.6.0")
     implementation ("androidx.media3:media3-session:1.6.0")
     implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation("com.facebook.android:facebook-android-sdk:18.0.2")
 
 }

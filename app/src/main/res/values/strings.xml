@@ -32,5 +32,8 @@
     <string name="are_you_sure_to_logout">Are you sure you want to log out?</string>
     <string name="media_notification_channel">Media Player</string>
     <string name="media_notification_channel_description">Channel Description</string>
+    <string name="facebook_app_id">631022899925938</string>
+    <string name="fb_login_protocol_scheme">Channel Description</string>
+    <string name="facebook_client_token">9852257c213be4cf26929e2aa46fba4c</string>
 
 </resources>

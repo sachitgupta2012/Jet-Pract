@@ -1,7 +1,10 @@
 package com.jetpacktest.presentation.ui
 
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -46,12 +49,18 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavHostController
 import com.jetpacktest.R
 import com.jetpacktest.data.AppConstant
 import com.jetpacktest.data.isValidEmail
 import com.jetpacktest.viewmodel.LoginViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginResult
+import com.facebook.login.widget.LoginButton
 import com.jetpacktest.data.GlobalProgressBar
 import com.jetpacktest.data.OkDialog
 import com.jetpacktest.data.hideLoading
@@ -60,6 +69,7 @@ import com.jetpacktest.data.showLoading
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(navController: NavHostController) {
+
     val context = LocalContext.current
     val backDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
     val viewModel: LoginViewModel = hiltViewModel()
@@ -67,10 +77,22 @@ fun LoginScreen(navController: NavHostController) {
     var enterUserEmail by remember { mutableStateOf("") }
     var enterUserPassword by remember { mutableStateOf("") }
     var checkedRememberState by remember { mutableStateOf(false) }
-
     var errorEmailMessage by remember { mutableStateOf<String?>(null) }
     var errorPasswordMessage by remember { mutableStateOf<String?>(null) }
     val showDialog by viewModel.showDialog.collectAsState()
+    val callbackManager = remember { CallbackManager.Factory.create() }
+    val TAG = "LoginScreenTag"
+
+
+    rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        callbackManager.onActivityResult(
+            result.resultCode,
+            result.resultCode,
+            result.data
+        )
+    }
 
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
@@ -127,7 +149,7 @@ fun LoginScreen(navController: NavHostController) {
                     painter = painterResource(id = R.drawable.icon_trucast_solution),
                     contentDescription = ""
                 )
-                Spacer(modifier = Modifier.height(80.dp))
+                Spacer(modifier = Modifier.height(50.dp))
                 Text(
                     modifier = Modifier.align(Alignment.CenterHorizontally),
                     text = stringResource(id = R.string.login_to_your_ac),
@@ -258,7 +280,7 @@ fun LoginScreen(navController: NavHostController) {
                     modifier = Modifier
                         .fillMaxWidth(0.8f)
                         .align(Alignment.CenterHorizontally)
-                        .offset(y = 24.dp),
+                        .offset(y = 16.dp),
                     colors = ButtonDefaults.outlinedButtonColors(
                         containerColor = colorResource(id = R.color.app_color)
                     )
@@ -277,13 +299,18 @@ fun LoginScreen(navController: NavHostController) {
                     } else {
                         hideLoading()
                         if (showDialog) {
-                            OkDialog(showDialog, false, stringResource(R.string.app_name), it.value?.Message) {
+                            OkDialog(
+                                showDialog,
+                                false,
+                                stringResource(R.string.app_name),
+                                it.value?.Message
+                            ) {
                                 viewModel.setShowDialog(false)
                             }
                         }
                     }
                 }
-                Spacer(modifier = Modifier.height(48.dp))
+                Spacer(modifier = Modifier.height(28.dp))
                 Text(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -295,6 +322,40 @@ fun LoginScreen(navController: NavHostController) {
                     textAlign = TextAlign.Center,
                     color = colorResource(id = R.color.white),
                     fontSize = 14.sp
+                )
+                Spacer(modifier = Modifier.height(20.dp))
+
+                AndroidView(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.CenterHorizontally),
+                    factory = { context ->
+                        LoginButton(context).apply {
+                            setPublishPermissions(listOf("email", "public_profile"))
+                            registerCallback(
+                                callbackManager,
+                                object : FacebookCallback<LoginResult> {
+
+                                    override fun onCancel() {
+                                        Toast.makeText(
+                                            context,
+                                            "Login canceled",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+
+                                    override fun onError(error: FacebookException) {
+                                        error.printStackTrace()
+                                    }
+
+                                    override fun onSuccess(result: LoginResult) {
+                                        Log.e(TAG, "onSuccess: ${result.accessToken}")
+                                        result.accessToken
+                                    }
+
+                                })
+                        }
+                    }
                 )
                 Row(
                     modifier = Modifier

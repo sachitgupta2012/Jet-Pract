@@ -11,6 +11,10 @@ class RepositoryClass @Inject constructor(
     private val apiService: ApiService,
     private val dataStore: DataStore
 ) {
+    fun registerUser(jsonObject: JsonObject): Flow<Response<Models.LoginResponse>> = flow {
+        emit(apiService.userLogin(jsonObject))
+    }
+
     fun loginUser(jsonObject: JsonObject): Flow<Response<Models.LoginResponse>> = flow {
         emit(apiService.userLogin(jsonObject))
     }

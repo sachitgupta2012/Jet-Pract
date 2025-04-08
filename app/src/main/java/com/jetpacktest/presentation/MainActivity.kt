@@ -39,6 +39,7 @@ class MainActivity : ComponentActivity() {
                     navController = navHostController,
                     startDestination = AppConstant.KeyName.splashscreen
                 ) {
+
                     composable(AppConstant.KeyName.splashscreen) {
                         SplashScreen(navController = navHostController)
                     }
